@@ -7,7 +7,7 @@
 
     <title>My To-Do App</title>
 
-    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/style.css?v=2">
 </head>
 
 <body>
@@ -17,25 +17,45 @@
         <h1>My To-Do List</h1>
         <p class="subtitle">Keep track of your daily tasks.</p>
 
-        <div class="task-form">
-            <input
-                type="text"
-                id="taskInput"
-                placeholder="Enter a new task"
-            >
+        <div class="action-tabs">
+    <button class="action-tab" id="addTab">
+        + Add new task
+    </button>
 
-            <button id="addButton">
-                Add Task
-            </button>
-            <input
-             type="text"
-             id="searchInput"
-             placeholder="Search tasks..."
-             >
+    <button class="action-tab" id="searchTab">
+        🔍 Search
+    </button>
+</div>
+
+<div class="panel-stage" id="panelStage">
+    <div class="panel-flipper" id="panelFlipper">
+
+        <div class="panel-face panel-front" id="addPanel">
+            <div class="task-form">
+                <input
+                    type="text"
+                    id="taskInput"
+                    placeholder="Enter a new task"
+                >
+
+                <button id="addButton">Add Task</button>
+            </div>
         </div>
 
-        <ul id="taskList">
-        </ul>
+        <div class="panel-face panel-back" id="searchPanel">
+            <div class="search-box">
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Search tasks..."
+                >
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<ul id="taskList"></ul>
 
     </main>
 

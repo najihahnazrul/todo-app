@@ -3,6 +3,12 @@ const searchInput = document.getElementById("searchInput");
 const taskInput = document.getElementById("taskInput");
 const addButton = document.getElementById("addButton");
 const taskList = document.getElementById("taskList");
+const addTab = document.getElementById("addTab");
+const searchTab = document.getElementById("searchTab");
+const addPanel = document.getElementById("addPanel");
+const searchPanel = document.getElementById("searchPanel");
+const panelStage = document.getElementById("panelStage");
+const panelFlipper = document.getElementById("panelFlipper");
 
 
 
@@ -13,12 +19,13 @@ function displayTask(task) {
     const leftSection = document.createElement("div");
     leftSection.className = "task-left";
 
+    const taskName = document.createElement("span");
+    taskName.textContent = task.title;
+
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
     checkbox.checked = task.completed;
-
-    const taskName = document.createElement("span");
-    taskName.textContent = task.title;
+    checkbox.className = "task-checkbox";
 
     if (task.completed) {
         taskName.classList.add("completed");
@@ -44,6 +51,7 @@ function displayTask(task) {
         }
 
         taskName.classList.toggle("completed", checkbox.checked);
+        task.completed = checkbox.checked;
     });
     
     const deleteButton = document.createElement("button");
@@ -131,7 +139,8 @@ function displayTask(task) {
             return;
         }
 
-        taskItem.remove();
+        allTasks = allTasks.filter((item) => item.id !== task.id);
+        renderTasks(allTasks);
     });
 
     leftSection.appendChild(checkbox);
@@ -205,7 +214,40 @@ taskInput.addEventListener("keydown", function (event) {
     }
 });
 
+let currentPanel = null;
 
+function activateTab(selectedTab) {
+    addTab.classList.remove("active");
+    searchTab.classList.remove("active");
+
+    selectedTab.classList.add("active");
+}
+
+addTab.addEventListener("click", () => {
+    activateTab(addTab);
+
+    panelStage.classList.add("open");
+    panelStage.classList.remove("show-search");
+
+    currentPanel = "add";
+
+    setTimeout(() => {
+        taskInput.focus();
+    }, 350);
+});
+
+searchTab.addEventListener("click", () => {
+    activateTab(searchTab);
+
+    panelStage.classList.add("open");
+    panelStage.classList.add("show-search");
+
+    currentPanel = "search";
+
+    setTimeout(() => {
+        searchInput.focus();
+    }, 350);
+});
 loadTasks();
 
 searchInput.addEventListener("input", () => {
