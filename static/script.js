@@ -1,6 +1,9 @@
+let allTasks = [];
+const searchInput = document.getElementById("searchInput");
 const taskInput = document.getElementById("taskInput");
 const addButton = document.getElementById("addButton");
 const taskList = document.getElementById("taskList");
+
 
 
 function displayTask(task) {
@@ -152,11 +155,9 @@ async function loadTasks() {
 
     const tasks = await response.json();
 
-    taskList.innerHTML = "";
+    allTasks = tasks;
 
-    tasks.forEach(function (task) {
-        displayTask(task);
-    });
+    renderTasks(allTasks);
 }
 
 
@@ -187,7 +188,8 @@ async function addTask() {
         return;
     }
 
-    displayTask(newTask);
+    allTasks.push(newTask);
+    renderTasks(allTasks);
 
     taskInput.value = "";
     taskInput.focus();
@@ -205,3 +207,21 @@ taskInput.addEventListener("keydown", function (event) {
 
 
 loadTasks();
+
+searchInput.addEventListener("input", () => {
+    const keyword = searchInput.value.toLowerCase();
+
+    const filteredTasks = allTasks.filter((task) =>
+        task.title.toLowerCase().includes(keyword)
+    );
+
+    renderTasks(filteredTasks);
+});
+
+function renderTasks(tasks) {
+    taskList.innerHTML = "";
+
+    tasks.forEach(function(task) {
+        displayTask(task);
+    });
+}
