@@ -9,6 +9,8 @@ const addPanel = document.getElementById("addPanel");
 const searchPanel = document.getElementById("searchPanel");
 const panelStage = document.getElementById("panelStage");
 const panelFlipper = document.getElementById("panelFlipper");
+const themeToggle = document.getElementById("themeToggle");
+const themeIcon = document.querySelector(".theme-icon");
 
 
 
@@ -267,3 +269,22 @@ function renderTasks(tasks) {
         displayTask(task);
     });
 }
+
+const savedTheme = localStorage.getItem("theme");
+
+if (savedTheme === "dark") {
+    document.body.classList.add("dark");
+    themeIcon.textContent = "☀️";
+}
+
+themeToggle.addEventListener("click", () => {
+    document.body.classList.toggle("dark");
+
+    if (document.body.classList.contains("dark")) {
+        themeIcon.textContent = "☀️";
+        localStorage.setItem("theme", "dark");
+    } else {
+        themeIcon.textContent = "🌙";
+        localStorage.setItem("theme", "light");
+    }
+});
